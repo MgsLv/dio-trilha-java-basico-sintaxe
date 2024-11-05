@@ -1,4 +1,3 @@
-document.addEventListener("DOMContentLoaded", function() {
   const languageSelector = document.getElementById("language-selector");
   const translations = {};
 
@@ -42,4 +41,3 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 
   loadTranslations(); // Carrega as traduções ao iniciar
-});
