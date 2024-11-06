@@ -3,7 +3,7 @@
 
   // Função para carregar traduções
   function loadTranslations() {
-    fetch('/Public/data/translations.json')
+    fetch('../../translations.json')
       .then(response => {
         if (!response.ok) {
           throw new Error("Erro ao carregar o JSON: " + response.statusText);
@@ -25,6 +25,8 @@
       el.innerHTML = translations[key] && translations[key][language] ? translations[key][language] : el.innerHTML; // Mantém o texto original se não encontrar a tradução
     });
 
+
+
     // Atualiza textos dos botões de login social sem remover os ícones
     const socialButtons = document.querySelectorAll(".button-social-login");
     socialButtons.forEach((button, index) => {
@@ -33,6 +35,8 @@
       button.innerHTML = `${icon} ${key}`;
     });
   }
+
+
 
   // Evento de mudança de idioma
   languageSelector.addEventListener("change", function() {
