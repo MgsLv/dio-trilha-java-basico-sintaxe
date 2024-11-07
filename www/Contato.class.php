@@ -39,7 +39,7 @@ class Contato{
 
     function __construct(){
         #o PDO precisa de 3 parametros
-        $dsn    = "mysql:dbname=etimcontato;host=localhost";
+        $dsn    = "mysql:dbname=dailyayu;host=localhost";
         $dbUser = "root";
         $dbPass = "";
 

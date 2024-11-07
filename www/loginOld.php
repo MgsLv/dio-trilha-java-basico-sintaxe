@@ -59,7 +59,8 @@ if(isset($_POST['email']) && !empty($_POST['email'])){
   <script src="./backend/Global.js" defer></script>
   <script src="./backend/LanguageToggle.js" defer></script>
   <script src="./backend/PasswordToggle.js" defer></script>
-  <script>
+
+      <script>
 				acesso();
 			</script>	
 
