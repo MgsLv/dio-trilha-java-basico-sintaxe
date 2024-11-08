@@ -1,12 +1,5 @@
 <?php
 
-/**
- * @author Fabio Claret
- * data abril/2024
- * Classe com conexao a banco de dados
- * @return boolean 
- */
-
 class Contato{
     private $id;
     private $nome;
@@ -38,40 +31,31 @@ class Contato{
     }
 
     function __construct(){
-        #o PDO precisa de 3 parametros
         $dsn    = "mysql:dbname=dailyayu;host=localhost";
         $dbUser = "root";
         $dbPass = "";
 
         try {
             $this->pdo = new PDO($dsn, $dbUser, $dbPass);
-           /* echo "<script>
-                    alert('Conectado ao banco')
-                 </script>";
-           */               
+        
         } catch (\Throwable $problema) {
             echo "<script>
                     alert('Banco indisponivel. Tente mais Tarde!!')
                  </script>";
-            //echo $problema;     
         } 
     }
 
    
     function insertUser($nome, $email, $senha){
-        // passo 1 - criar uma variavel com a consulta SQL
         
         $sql = "INSERT INTO usuarios SET nome = :n, email = :e, senha = :s";
 
-        // passo 2 - Quando tem apelidos, temos que usar o metodo prepare
         $sql = $this->pdo->prepare($sql);
         
-        // passo 3 - depois do prepare, usar o bindValue, um pra cada apelido
         $sql->bindValue(":n", $nome);
         $sql->bindValue(":e", $email);
         $sql->bindValue(":s", $senha);
 
-        // passo 4 - executar o comando
         return $sql->execute();
     }
 
