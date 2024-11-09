@@ -31,7 +31,7 @@ class Contato{
     }
 
     function __construct(){
-        $dsn    = "mysql:dbname=dailyayu;host=localhost";
+$dsn = "mysql:dbname=dailyayu;host=127.0.0.1";
         $dbUser = "root";
         $dbPass = "";
 
@@ -47,36 +47,36 @@ class Contato{
 
    
     function insertUser($nome, $email, $senha){
-        
-        $sql = "INSERT INTO usuarios SET nome = :n, email = :e, senha = :s";
+    $senhaHash = password_hash($senha, PASSWORD_DEFAULT);
 
-        $sql = $this->pdo->prepare($sql);
-        
-        $sql->bindValue(":n", $nome);
-        $sql->bindValue(":e", $email);
-        $sql->bindValue(":s", $senha);
+    $sql = "INSERT INTO usuarios SET nome = :n, email = :e, senha = :s";
+    $sql = $this->pdo->prepare($sql);
+    
+    $sql->bindValue(":n", $nome);
+    $sql->bindValue(":e", $email);
+    $sql->bindValue(":s", $senhaHash);
 
-        return $sql->execute();
-    }
+    return $sql->execute();
+}
 
     function checkUserPass($email, $senha){
-        $sql = "SELECT *FROM usuarios WHERE email = :e AND senha =:s";
-        $sql = $this->pdo->prepare($sql);
-        
-        $sql-> bindValue(":e", $email);
-        $sql-> bindValue(":s", $senha);
-        $sql->execute();
-        
-        if( $sql->rowCount() > 0 ){
-            $dados = $sql->fetch();            
-        }else{
-            $dados = array();
-        }
-        
-        return $dados;
-    }
-
+    $sql = "SELECT * FROM usuarios WHERE email = :e";
+    $sql = $this->pdo->prepare($sql);
     
+    $sql->bindValue(":e", $email);
+    $sql->execute();
+    
+    if($sql->rowCount() > 0){
+        $dados = $sql->fetch();
+        if (password_verify($senha, $dados['senha'])) {
+            return $dados;  
+        } else {
+            return array();  
+        }
+    } else {
+        return array();  
+    }
+}
     function checkUser($email){
         $sql = "SELECT *FROM usuarios WHERE email = :e";
         $sql = $this->pdo->prepare($sql);

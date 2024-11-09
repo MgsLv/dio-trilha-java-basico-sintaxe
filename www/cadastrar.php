@@ -1,4 +1,41 @@
+<?php
+session_start();
 
+include 'Contato.class.php';
+$contato = new Contato();
+
+if (isset($_POST['cadastrar'])) {
+    $nome  = $_POST['nome'];
+    $email = $_POST['email'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT); // Hash da senha
+
+    $dados = $contato->checkUser($_POST['email']);
+
+    if (!empty($dados)) {
+        echo "<script>alert('Usuário já cadastrado!');</script>";
+    } else {
+        $contato->insertUser($nome, $email, $senha);  
+        echo "<script>alert('Usuário cadastrado com sucesso!');</script>";
+    }
+}
+elseif (isset($_POST['login'])) {
+    $email = $_POST['email'];
+    $senha = $_POST['senha']; 
+
+    $dados = $contato->checkUserPass($email);
+
+    if (!empty($dados)) {
+        if (password_verify($senha, $dados['senha'])) {
+            $_SESSION['nome'] = $dados['nome'];
+            header("location:index.php");
+        } else {
+            echo "<script>alert('Senha incorreta!');</script>";
+        }
+    } else {
+        echo "<script>alert('Usuário não encontrado!');</script>";
+    }
+}
+        ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -106,39 +143,3 @@
   </main>
 </body>
 
-<?php
-session_start();
-
-include 'Contato.class.php';
-$contato = new Contato();
-
-if( isset($_POST['cadastrar'])){
-    $nome  = $_POST['nome' ];
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    
-    $dados = $contato->checkUser($_POST['email']);
-
-    if( !empty($dados)){
-        echo "
-        <script>
-            alert('Usuario ja cadastrado!')
-        </script>";
-    }else{
-        $contato->insertUser($nome, $email, $senha);  
-        echo "
-        <script>
-            alert('Usuario cadastrado com sucesso!')
-        </script>";
-    }
-}elseif( isset($_POST['login']) ) {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];
-    $dados = $contato->checkUserPass($email, $senha);
-    if( !empty( $dados ) ){
-        $_SESSION['nome'] = $dados['nome'];
-        header("location:index.php");
-    }
-}     
-    
-        
