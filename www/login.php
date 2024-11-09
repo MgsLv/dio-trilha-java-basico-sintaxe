@@ -113,7 +113,7 @@ if( isset($_POST['cadastrar'])){
 
         <button type="submit" name="login" value="Login" id="button-login-submit" data-translate="loginButton">Login</button>
 
-        <!-- Botões de Login Social -->
+        <!-- Botões do Login Social -->
         <div id="social-login-buttons">
           <button class="button-social-login">
             <img src="./assets/images/google-logo.png" alt="Google Icon" class="icon-social">
