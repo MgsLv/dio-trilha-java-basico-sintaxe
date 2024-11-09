@@ -4,40 +4,31 @@ session_start();
 include 'Contato.class.php';
 $contato = new Contato();
 
-if( isset($_POST['cadastrar'])){
-    $nome  = $_POST['nome' ];
+if (isset($_POST['cadastrar'])) {
+    $nome = $_POST['nome'];
+    $email = $_POST['email'];
+    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+
+    $dados = $contato->checkUser($email);
+
+    if ($dados) {
+        echo "<script>alert('Usuário já cadastrado!')</script>";
+    } else {
+        $contato->insertUser($nome, $email, $senha);
+        echo "<script>alert('Usuário cadastrado com sucesso!')</script>";
+    }
+} elseif (isset($_POST['login'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
-    
-    $dados = $contato->checkUser($_POST['email']);
+    $dados = $contato->checkUserPass($email, $senha);
 
-    if( !empty($dados)){
-        echo "
-        <script>
-            alert('Usuario ja cadastrado!')
-        </script>";
-    }else{
-        $contato->insertUser($nome, $email, $senha);  
-        echo "
-        <script>
-            alert('Usuario cadastrado com sucesso!')
-        </script>";
-    }
-}elseif( isset($_POST['login']) ) {
-    $email = $_POST['email'];
-    $senha = $_POST['senha'];  
-    $dados = $contato->checkUserPass($email, $senha);  // Passando email e senha para a função
-
-    if( !empty($dados) ){
+    if ($dados) {
         $_SESSION['nome'] = $dados['nome'];
         header("location:index.php");
     } else {
-        echo "
-        <script>
-            alert('Email ou senha incorretos!')
-        </script>";
+        echo "<script>alert('Email ou senha incorretos!')</script>";
     }
-}     
+}
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
