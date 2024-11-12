@@ -1,9 +1,9 @@
 <?php
 session_start();
+
 include 'Contato.class.php';
 $contato = new Contato();
 
-// Cadastro de novo usuário
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
@@ -18,7 +18,6 @@ if (isset($_POST['cadastrar'])) {
         echo "<script>alert('Usuário cadastrado com sucesso!')</script>";
     }
 } elseif (isset($_POST['login'])) {
-    // Login do usuário
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $dados = $contato->checkUserPass($email, $senha);
@@ -26,10 +25,10 @@ if (isset($_POST['cadastrar'])) {
     if ($dados) {
         $_SESSION['nome'] = $dados['nome'];
         $_SESSION['email'] = $dados['email'];
-        header("Location: index.php");
+        header("Location: test.php");
         exit;
     } else {
-        echo "<script>alert('Email ou senha incorretos!')</script>";
+        echo "<script>alert('Email ou senha incorretos!');</script>";
     }
 }
 ?>
