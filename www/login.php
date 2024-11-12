@@ -4,20 +4,12 @@ session_start();
 include 'Contato.class.php';
 $contato = new Contato();
 
-if (isset($_POST['cadastrar'])) {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+if (isset($_SESSION['nome'])) {
+    header("Location: test.php");
+    exit;
+}
 
-    $dados = $contato->checkUser($email);
-
-    if ($dados) {
-        echo "<script>alert('Usuário já cadastrado!')</script>";
-    } else {
-        $contato->insertUser($nome, $email, $senha);
-        echo "<script>alert('Usuário cadastrado com sucesso!')</script>";
-    }
-} elseif (isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $dados = $contato->checkUserPass($email, $senha);
@@ -25,12 +17,17 @@ if (isset($_POST['cadastrar'])) {
     if ($dados) {
         $_SESSION['nome'] = $dados['nome'];
         $_SESSION['email'] = $dados['email'];
+
         header("Location: test.php");
         exit;
     } else {
         echo "<script>alert('Email ou senha incorretos!');</script>";
     }
 }
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
