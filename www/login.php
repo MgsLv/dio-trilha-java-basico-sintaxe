@@ -1,9 +1,9 @@
 <?php
 session_start();
-
 include 'Contato.class.php';
 $contato = new Contato();
 
+// Cadastro de novo usuário
 if (isset($_POST['cadastrar'])) {
     $nome = $_POST['nome'];
     $email = $_POST['email'];
@@ -18,13 +18,16 @@ if (isset($_POST['cadastrar'])) {
         echo "<script>alert('Usuário cadastrado com sucesso!')</script>";
     }
 } elseif (isset($_POST['login'])) {
+    // Login do usuário
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $dados = $contato->checkUserPass($email, $senha);
 
     if ($dados) {
         $_SESSION['nome'] = $dados['nome'];
-        header("location:index.php");
+        $_SESSION['email'] = $dados['email'];
+        header("Location: index.php");
+        exit;
     } else {
         echo "<script>alert('Email ou senha incorretos!')</script>";
     }
@@ -49,19 +52,13 @@ if (isset($_POST['cadastrar'])) {
   <script src="./backend/Global.js" defer></script>
   <script src="./backend/LanguageToggle.js" defer></script>
   <script src="./backend/PasswordToggle.js" defer></script>
-  <script>
-    acesso();
-  </script>  
-
 </head>
 
 <body>
-
-  <!-- Header com Navbar -->
   <header id="navigation-header">
     <nav id="navbar">
       <div id="logo-container">
-        <img src="#" alt="" id="logo">
+        <img src="#" alt="Logo" id="logo">
       </div>
       <div id="navigation-buttons">
         <select id="language-selector" aria-label="Selecione o idioma">
@@ -75,20 +72,15 @@ if (isset($_POST['cadastrar'])) {
     </nav>
   </header>
 
-  <!-- Main Container de Login -->
   <main id="login-container">
     <section id="login-box">
-
-      <!-- Formulário de Login -->
       <form id="login-form" method="POST">
-
         <label for="email" data-translate="emailLabel">Email</label>
         <input type="email" id="email" name="email" required>
 
         <label for="password" data-translate="passwordLabel">Senha</label>
         <div class="password-input-container">
           <input type="password" name="senha" id="password" required>
-
           <span id="icon-toggle-password">
             <img src="./assets/images/eye-open.png" alt="Toggle password visibility" width="20" id="toggle-icon">
           </span>
@@ -104,7 +96,6 @@ if (isset($_POST['cadastrar'])) {
 
         <button type="submit" name="login" value="Login" id="button-login-submit" data-translate="loginButton">Login</button>
 
-        <!-- Botões do Login Social -->
         <div id="social-login-buttons">
           <button class="button-social-login">
             <img src="./assets/images/google-logo.png" alt="Google Icon" class="icon-social">
@@ -126,7 +117,6 @@ if (isset($_POST['cadastrar'])) {
           <a href="cadastrar.php" class="esqueceu" data-translate="createAccountButton">Criar conta</a>
         </button>
       </div>
-
     </section>
   </main>
 </body>
