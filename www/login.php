@@ -4,20 +4,12 @@ session_start();
 include 'Contato.class.php';
 $contato = new Contato();
 
-if (isset($_POST['cadastrar'])) {
-    $nome = $_POST['nome'];
-    $email = $_POST['email'];
-    $senha = password_hash($_POST['senha'], PASSWORD_DEFAULT);
+if (isset($_SESSION['nome'])) {
+    header("Location: app.php");
+    exit;
+}
 
-    $dados = $contato->checkUser($email);
-
-    if ($dados) {
-        echo "<script>alert('Usuário já cadastrado!')</script>";
-    } else {
-        $contato->insertUser($nome, $email, $senha);
-        echo "<script>alert('Usuário cadastrado com sucesso!')</script>";
-    }
-} elseif (isset($_POST['login'])) {
+if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $senha = $_POST['senha'];
     $dados = $contato->checkUserPass($email, $senha);
@@ -25,12 +17,17 @@ if (isset($_POST['cadastrar'])) {
     if ($dados) {
         $_SESSION['nome'] = $dados['nome'];
         $_SESSION['email'] = $dados['email'];
+
         header("Location: test.php");
         exit;
     } else {
         echo "<script>alert('Email ou senha incorretos!');</script>";
     }
 }
+
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Pragma: no-cache");
+header("Expires: 0");
 ?>
 <!DOCTYPE html>
 <html lang="pt-BR">
@@ -43,8 +40,7 @@ if (isset($_POST['cadastrar'])) {
 
   <!-- links css -->
   <link rel="stylesheet" href="./assets/css/global.css">
-  <link rel="stylesheet" href="./assets/css/login.css">
-  <link rel="stylesheet" href="./assets/css/navbar.css">
+  <link rel="stylesheet" href="./assets/css/login.css?v=1">
 
   <!-- scripts JavaScript -->
   <script src="./backend/form-validation.js" defer></script>
@@ -73,6 +69,7 @@ if (isset($_POST['cadastrar'])) {
 
   <main id="login-container">
     <section id="login-box">
+
       <form id="login-form" method="POST">
         <label for="email" data-translate="emailLabel">Email</label>
         <input type="email" id="email" name="email" required>
@@ -109,13 +106,13 @@ if (isset($_POST['cadastrar'])) {
             <span class="social-text">Continue com GitHub</span>
           </button>
         </div>
-      </form>
-
-      <div id="button-container-signup">
+        <div id="button-container-signup">
         <button id="button-signup-create-account">
           <a href="cadastrar.php" class="esqueceu" data-translate="createAccountButton">Criar conta</a>
         </button>
       </div>
+      </form>
+      <div id="qrcode-box" ><img src=".\assets\images\images.png" alt="qrcode" id="qrcode-image"></div>
     </section>
   </main>
 </body>
