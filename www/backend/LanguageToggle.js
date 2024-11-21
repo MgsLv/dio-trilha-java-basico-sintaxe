@@ -3,7 +3,7 @@
 
   // Função para carregar traduções
   function loadTranslations() {
-    fetch('../../translations.json')
+    fetch('./translations.json')
       .then(response => {
         if (!response.ok) {
           throw new Error("Erro ao carregar o JSON: " + response.statusText);

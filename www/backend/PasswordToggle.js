@@ -7,8 +7,8 @@ togglePasswordIcon.addEventListener("click", function() {
   passwordInput.type = isPasswordVisible ? "password" : "text";
 
   const iconPath = isPasswordVisible ?
-    "../../assets/images/eye-open.png" :
-    "../../assets/images/eye-closed.png";
+    "./assets/images/eye-open.png" :
+    "./assets/images/eye-closed.png";
 
   document.getElementById("toggle-icon").src = iconPath;
 });
