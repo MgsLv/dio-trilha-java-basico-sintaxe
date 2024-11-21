@@ -5,7 +5,11 @@ include 'Contato.class.php';
 $contato = new Contato();
 
 if (isset($_SESSION['nome'])) {
+<<<<<<< HEAD
     header("Location: app.php");
+=======
+    header("Location: test.php");
+>>>>>>> baefa0981c5456f0637b556b1704ce2dcf7da4a3
     exit;
 }
 
