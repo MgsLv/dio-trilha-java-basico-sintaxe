@@ -7,13 +7,14 @@ public class ContaTerminal {
         Scanner scn = new Scanner(System.in);
         scn.useLocale(new Locale("pt", "BR"));
 
-        int numero;
-        double saldo;
         String nomeCliente;
         String agencia;
+        int numero;
+        double saldo;
+
 
         // Exibir as mensagens para o nosso usuário
-        
+
         // Obter pela scanner os valores digitados no terminal
 
         // Exibir a mensagem conta criada
