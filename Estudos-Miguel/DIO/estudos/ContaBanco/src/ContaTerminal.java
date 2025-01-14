@@ -1,3 +1,4 @@
+import java.sql.SQLOutput;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -7,16 +8,18 @@ public class ContaTerminal {
         Scanner scn = new Scanner(System.in);
         scn.useLocale(new Locale("pt", "BR"));
 
-        String nomeCliente;
-        String agencia;
-        int numero;
-        double saldo;
+        System.out.println("Por favor, digite o seu nome!");
+        String nomeCliente = scn.nextLine();
 
+        System.out.println("Certo, agora digite o número da Agência!");
+        int agencia = Integer.parseInt(scn.nextLine());
 
-        // Exibir as mensagens para o nosso usuário
+        System.out.println("Certo, agora digite o número da sua Conta! (Ex: 00012345-6 )");
+        String conta = scn.nextLine();
 
-        // Obter pela scanner os valores digitados no terminal
+        final double saldo = 500.00;
 
-        // Exibir a mensagem conta criada
+        System.out.println("Olá " + nomeCliente + ", obrigado por criar uma conta em nosso banco, " +
+                "sua agência é " + agencia + ", conta " + conta +" e seu saldo de R$" + saldo + " já está disponível para saque");
     }
 }
